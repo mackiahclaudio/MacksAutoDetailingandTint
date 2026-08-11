@@ -85,6 +85,10 @@ radial-gradient(ellipse at center bottom,rgba(239,27,36,.16),transparent 47%),li
 .date-time{display:grid;grid-template-columns:1fr 1.35fr;gap:12px;margin-top:14px}.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;max-height:360px;overflow:auto;padding-right:3px}.slot{padding:9px 5px;background:#222429;border:1px solid #31343a;color:#fff;border-radius:4px;cursor:pointer}.slot.active{background:var(--red);border-color:var(--red)}
 .summary{margin-top:14px;border-top:1px solid #2d2f34;padding-top:12px;color:#c8c9cd;font-size:.87rem}.sum-row{display:flex;justify-content:space-between;gap:15px;padding:4px 0}.total{font-size:1.1rem;color:#fff}.total strong{color:#ff434c;font-size:1.35rem}
 .success{display:none;margin-top:11px;padding:12px;border-radius:5px;border:1px solid rgba(44,211,126,.45);background:rgba(44,211,126,.08);color:#dfffea}
+.paypal-box{display:none;margin-top:14px;padding:14px;background:#fff;border-radius:7px}
+.paypal-box.show{display:block}
+.paypal-note{margin-top:8px;color:#8f9298;font-size:.72rem}
+.paypal-warning{display:none;margin-top:10px;padding:10px;border:1px solid #6b5513;background:#241e08;color:#ffe78a;border-radius:5px;font-size:.78rem}
 .memberships{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.plan{position:relative}.plan.featured{border-color:var(--red);box-shadow:0 0 38px rgba(239,27,36,.12)}.badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--red);font-size:.7rem;font-weight:950;padding:5px 15px;border-radius:3px}
 .plan .monthly{font-size:.8rem;color:#ff535b}.plan .price{font-size:2rem;font-weight:1000;color:var(--red)}
 .track-divider{height:82px;opacity:.3;background:
@@ -189,9 +193,10 @@ footer{padding:30px 0;border-top:1px solid #222;color:#999;font-size:.8rem}
           <div class="field"><label>Phone</label><input id="phone" placeholder="Phone number"></div>
           <div class="field"><label>Payment Method</label>
             <select id="paymentMethod">
-              <option>Credit / Debit Card</option>
-              <option>Apple Pay / Google Pay</option>
-              <option>Pay in Person</option>
+              <option value="paypal">PayPal</option>
+              <option value="card">Credit / Debit Card</option>
+              <option value="wallet">Apple Pay / Google Pay</option>
+              <option value="inperson">Pay in Person</option>
             </select>
           </div>
         </div>
@@ -208,9 +213,13 @@ footer{padding:30px 0;border-top:1px solid #222;color:#999;font-size:.8rem}
         <div class="sum-row total"><span>Total</span><strong id="summaryTotal">$0.00</strong></div>
       </div>
 
-      <button class="btn btn-red" style="width:100%;margin-top:12px" onclick="checkoutBooking()">Checkout</button>
+      <button class="btn btn-red" id="checkoutButton" style="width:100%;margin-top:12px" onclick="checkoutBooking()">Continue to Checkout</button>
+      <div class="paypal-box" id="paypalBox">
+        <div id="paypal-button-container"></div>
+      </div>
+      <div class="paypal-warning" id="paypalWarning"></div>
       <div class="success" id="success"></div>
-      <div style="margin-top:10px;color:#8f9298;font-size:.72rem">Demo checkout: this front-end does not charge a card until a live payment processor such as Stripe is connected.</div>
+      <div class="paypal-note">PayPal checkout is ready in the site code. To accept live payments, replace the placeholder PayPal Client ID in the script with your own PayPal app Client ID. Never put your PayPal secret key in this website.</div>
     </div>
   </div>
 </div></section>
@@ -228,6 +237,8 @@ footer{padding:30px 0;border-top:1px solid #222;color:#999;font-size:.8rem}
 
 <script>
 
+const PAYPAL_CLIENT_ID = 'AQdl63Po0AiYeubW7tO2Y'; // Replace with your PayPal REST app Client ID. Do NOT put your secret here.
+let paypalRendered = false;
 const serviceButtons=[...document.querySelectorAll('.service-btn')];
 const bodyType=document.getElementById('bodyType');
 const tintChoice=document.getElementById('tintChoice');
@@ -334,44 +345,149 @@ document.getElementById('date').addEventListener('change',()=>{
   }
 });
 
-function checkoutBooking(){
+
+function getCheckoutTotal(){
+  return [...selectedServices.values()].reduce((sum,item)=>sum+item.price,0);
+}
+
+function getBookingDraft(){
   const items=[...selectedServices.values()];
-  const name=document.getElementById('name').value.trim();
-  const email=document.getElementById('email').value.trim();
-  const phone=document.getElementById('phone').value.trim();
-  const date=document.getElementById('date').value;
-  const paymentMethod=document.getElementById('paymentMethod').value;
-
-  if(!items.length) return alert('Select at least one service.');
-  if(!selectedTime) return alert('Select a 1-hour appointment time.');
-  if(!name || !email || !phone) return alert('Enter your name, email, and phone number.');
-
-  const total=items.reduce((sum,item)=>sum+item.price,0);
   const vehicle=document.getElementById('manualVehicle').value.trim() || bodyType.options[bodyType.selectedIndex].text;
-  const booking={
-    customer:name,
-    email,
-    phone,
-    date,
+  return {
+    customer:document.getElementById('name').value.trim(),
+    email:document.getElementById('email').value.trim(),
+    phone:document.getElementById('phone').value.trim(),
+    date:document.getElementById('date').value,
     time:selectedTime,
     vehicle,
     vehicleType:bodyType.value,
-    paymentMethod,
     services:items,
-    total
+    total:getCheckoutTotal()
   };
+}
+
+function validateBookingDraft(){
+  const b=getBookingDraft();
+  if(!b.services.length){alert('Select at least one service.');return false}
+  if(!b.time){alert('Select a 1-hour appointment time.');return false}
+  if(!b.customer || !b.email || !b.phone){alert('Enter your name, email, and phone number.');return false}
+  return true;
+}
+
+function loadPayPalSdk(){
+  const warning=document.getElementById('paypalWarning');
+  if(PAYPAL_CLIENT_ID==='YOUR_PAYPAL_CLIENT_ID'){
+    warning.style.display='block';
+    warning.innerHTML='PayPal is selected, but the site still needs your PayPal Client ID before it can collect live payments.';
+    return;
+  }
+  warning.style.display='none';
+  if(window.paypal){renderPayPalButtons();return}
+  const script=document.createElement('script');
+  script.src='https://www.paypal.com/sdk/js?client-id='+encodeURIComponent(PAYPAL_CLIENT_ID)+'&currency=USD&components=buttons';
+  script.onload=renderPayPalButtons;
+  script.onerror=()=>{
+    warning.style.display='block';
+    warning.textContent='PayPal could not load. Check the Client ID and internet connection.';
+  };
+  document.head.appendChild(script);
+}
+
+function renderPayPalButtons(){
+  if(paypalRendered || !window.paypal) return;
+  paypalRendered=true;
+  paypal.Buttons({
+    style:{layout:'vertical',shape:'rect',label:'paypal'},
+    createOrder(data, actions){
+      if(!validateBookingDraft()) throw new Error('Booking validation failed');
+      const booking=getBookingDraft();
+      return actions.order.create({
+        purchase_units:[{
+          description:"Mack's Automotive Detail and Tint services",
+          amount:{
+            currency_code:'USD',
+            value:booking.total.toFixed(2),
+            breakdown:{
+              item_total:{currency_code:'USD',value:booking.total.toFixed(2)}
+            }
+          },
+          items:booking.services.map((item,index)=>({
+            name:item.name,
+            unit_amount:{currency_code:'USD',value:item.price.toFixed(2)},
+            quantity:'1',
+            sku:'service-'+(index+1)
+          }))
+        }]
+      });
+    },
+    onApprove(data, actions){
+      return actions.order.capture().then(details=>{
+        const booking=getBookingDraft();
+        booking.paymentMethod='PayPal';
+        booking.paypalOrderId=data.orderID;
+        booking.paymentStatus='COMPLETED';
+        localStorage.setItem('macksLatestBooking',JSON.stringify(booking));
+        const s=document.getElementById('success');
+        s.style.display='block';
+        s.innerHTML=`✓ <strong>PayPal payment completed.</strong>
+          <div class="booked-card" style="grid-template-columns:1fr">
+            <div>
+              <h4>${booking.vehicle}</h4>
+              <p><strong>${booking.date}</strong> at <strong>${booking.time}</strong></p>
+              <p>${booking.services.map(x=>`${x.name} — $${x.price.toFixed(2)}`).join('<br>')}</p>
+              <p><strong>Paid: $${booking.total.toFixed(2)}</strong></p>
+              <p>PayPal Order: ${data.orderID}</p>
+            </div>
+          </div>`;
+        document.getElementById('paypalBox').classList.remove('show');
+      });
+    },
+    onCancel(){
+      const warning=document.getElementById('paypalWarning');
+      warning.style.display='block';
+      warning.textContent='PayPal checkout was cancelled. Your appointment has not been marked paid.';
+    },
+    onError(err){
+      console.error(err);
+      const warning=document.getElementById('paypalWarning');
+      warning.style.display='block';
+      warning.textContent='PayPal checkout had an error. Please try again.';
+    }
+  }).render('#paypal-button-container');
+}
+
+document.getElementById('paymentMethod').addEventListener('change',()=>{
+  const paypalSelected=document.getElementById('paymentMethod').value==='paypal';
+  document.getElementById('paypalBox').classList.toggle('show',paypalSelected);
+  if(paypalSelected) loadPayPalSdk();
+});
+
+function checkoutBooking(){
+  if(!validateBookingDraft()) return;
+  const method=document.getElementById('paymentMethod').value;
+
+  if(method==='paypal'){
+    document.getElementById('paypalBox').classList.add('show');
+    loadPayPalSdk();
+    document.getElementById('paypalBox').scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+
+  const booking=getBookingDraft();
+  booking.paymentMethod=document.getElementById('paymentMethod').options[document.getElementById('paymentMethod').selectedIndex].text;
+  booking.paymentStatus=method==='inperson' ? 'PAY AT APPOINTMENT' : 'PAYMENT PROCESSOR NOT CONNECTED';
   localStorage.setItem('macksLatestBooking',JSON.stringify(booking));
 
   const s=document.getElementById('success');
   s.style.display='block';
-  s.innerHTML=`✓ <strong>Checkout ready.</strong>
+  s.innerHTML=`✓ <strong>Checkout saved.</strong>
     <div class="booked-card" style="grid-template-columns:1fr">
       <div>
-        <h4>${vehicle}</h4>
-        <p><strong>${date}</strong> at <strong>${selectedTime}</strong></p>
-        <p>${items.map(x=>`${x.name} — $${x.price.toFixed(2)}`).join('<br>')}</p>
-        <p><strong>Total: $${total.toFixed(2)}</strong></p>
-        <p>Payment method: ${paymentMethod}</p>
+        <h4>${booking.vehicle}</h4>
+        <p><strong>${booking.date}</strong> at <strong>${booking.time}</strong></p>
+        <p>${booking.services.map(x=>`${x.name} — $${x.price.toFixed(2)}`).join('<br>')}</p>
+        <p><strong>Total: $${booking.total.toFixed(2)}</strong></p>
+        <p>Payment method: ${booking.paymentMethod}</p>
       </div>
     </div>`;
 }
@@ -379,6 +495,10 @@ function checkoutBooking(){
 updateTintPrice();
 updateVehicleSummary();
 recalc();
+if(document.getElementById('paymentMethod').value==='paypal'){
+  document.getElementById('paypalBox').classList.add('show');
+  loadPayPalSdk();
+}
 </script>
 </body>
 </html>
