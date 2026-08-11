@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mack’s Automotive Detail and Tint</title>
+<meta name="description" content="Mack’s Automotive Detail and Tint — detailing, window tint, boat cleaning, motorcycle cleaning and unlimited wash memberships.">
+<style>
+:root{--bg:#030303;--panel:#0d0e10;--panel2:#151619;--red:#ef1b24;--red2:#9d090e;--text:#f6f7f9;--muted:#aeb1b7;--line:#2c2f34}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+radial-gradient(circle at 12% 17%,rgba(239,27,36,.10),transparent 20%),
+radial-gradient(circle at 88% 38%,rgba(239,27,36,.07),transparent 22%),
+#030303;color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.085;background-image:
+repeating-linear-gradient(68deg,transparent 0 46px,rgba(255,255,255,.2) 47px 49px,transparent 50px 94px),
+repeating-linear-gradient(112deg,transparent 0 46px,rgba(255,255,255,.1) 47px 49px,transparent 50px 94px);
+background-size:150px 150px;mask-image:linear-gradient(to bottom,transparent 5%,#000 30%,#000 75%,transparent 98%)}
+a{text-decoration:none;color:inherit}.container{width:min(1220px,92%);margin:auto}
+.contactbar{background:#09090a;border-bottom:1px solid #25262a;color:#d8d9dc;font-size:.78rem}
+.contactbar .inner{min-height:34px;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;padding:6px 0}
+.contactbar a{color:#fff}.contactbar a:hover{color:var(--red)}
+.contactbar strong{color:var(--red);letter-spacing:.04em}
+nav{position:sticky;top:0;z-index:50;background:rgba(2,2,2,.87);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 0 35px rgba(239,27,36,.07)}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.logo{font-size:1.18rem;font-weight:1000;font-style:italic;letter-spacing:.055em}.logo span{color:var(--red)}
+.links{display:flex;gap:23px;font-size:.75rem;font-weight:900;letter-spacing:.04em}
+.links a:hover{color:var(--red)}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:5px;padding:13px 21px;font-weight:950;letter-spacing:.035em;text-transform:uppercase;cursor:pointer}
+.btn-red{background:linear-gradient(100deg,#f2212b,#c30f16);color:white;box-shadow:0 0 24px rgba(239,27,36,.16)}
+.btn-outline{border:1px solid #5b5d62;background:#111;color:white}
+.hero{min-height:720px;position:relative;display:flex;align-items:end;background:
+linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.08) 48%,rgba(0,0,0,.75) 82%,#030303),
+url("assets/macks-hero.png") center/cover no-repeat;border-bottom:1px solid rgba(239,27,36,.35)}
+.hero:after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:5px;background:linear-gradient(90deg,transparent,var(--red),#ff6168,var(--red),transparent);filter:blur(2px);box-shadow:0 0 28px var(--red)}
+.hero-copy{position:relative;z-index:3;width:100%;padding:0 0 42px;text-align:center}
+.hero-copy h1{margin:0 auto 7px;font-size:clamp(2.2rem,6vw,5.4rem);text-transform:uppercase;line-height:.9;letter-spacing:-.04em;text-shadow:0 5px 35px #000}
+.hero-copy h1 span{display:block;color:#fff}.hero-copy strong{color:#ff2b34}
+.hero-copy p{color:#d4d5d8;margin:10px auto 18px;max-width:680px}.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.ambient-line{height:2px;background:linear-gradient(90deg,transparent,var(--red),transparent);box-shadow:0 0 20px var(--red),0 0 55px rgba(239,27,36,.5)}
+.trust{background:#0c0d0f;border-block:1px solid #222}.trust .row{display:grid;grid-template-columns:repeat(4,1fr)}
+.trust-item{padding:20px;border-right:1px solid #25272b}.trust-item:last-child{border-right:0}.trust-item b{display:block;font-size:.8rem}.trust-item small{color:var(--muted)}
+section{padding:78px 0}.section-title{text-align:center;margin-bottom:30px}.eyebrow{color:var(--red);font-weight:950;text-transform:uppercase;letter-spacing:.12em;font-size:.75rem}.section-title h2{margin:5px 0 8px;font-size:clamp(1.8rem,3vw,2.7rem);letter-spacing:.06em}.section-title p{margin:0;color:var(--muted)}
+.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.service-card{background:linear-gradient(160deg,#151619,#0a0a0b);border:1px solid #2c2e31;border-radius:8px;padding:24px;box-shadow:inset 0 -20px 50px rgba(0,0,0,.3)}
+.service-card h3{margin:10px 0 5px}.service-card p{color:var(--muted);min-height:48px}.service-card .price{font-size:1.45rem;color:var(--red);font-weight:1000}
+.service-card ul{list-style:none;padding:0;color:#d8d9dc;font-size:.88rem;line-height:1.85}.service-card li:before{content:"✓";margin-right:8px}
+.service-card .btn{width:100%;margin-top:7px}
+.booking-shell{position:relative;background:linear-gradient(180deg,#050505,#08090b,#040404)}
+.booking-shell:before,.booking-shell:after{content:"";position:absolute;width:36%;height:4px;background:var(--red);filter:blur(4px);box-shadow:0 0 38px var(--red)}
+.booking-shell:before{top:0;left:4%}.booking-shell:after{bottom:0;right:4%}
+.booking-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:16px;align-items:start}
+.panel{background:linear-gradient(165deg,#15161a,#0b0c0e);border:1px solid #35383e;border-radius:8px;padding:19px;box-shadow:0 15px 50px rgba(0,0,0,.28)}
+.panel h3{margin:0 0 16px;font-size:1rem;letter-spacing:.04em}
+.field{display:grid;gap:6px;margin-bottom:11px}.field label{font-size:.73rem;color:#c5c8cd;font-weight:850}
+input,select{width:100%;border:1px solid #3a3c41;background:#090a0c;color:#fff;border-radius:5px;padding:11px}
+.vin-row{display:grid;grid-template-columns:1fr auto;gap:7px}.vin-status{font-size:.78rem;color:var(--muted);min-height:18px}
+.vehicle-result{display:none;margin:12px 0;border:1px solid rgba(239,27,36,.5);background:rgba(239,27,36,.06);padding:11px;border-radius:6px}
+.vehicle-result b{color:#fff}.vehicle-result span{color:#ff5860}
+.viewer{position:relative;min-height:340px;border:1px solid #2a2c30;border-radius:7px;overflow:hidden;background:
+radial-gradient(ellipse at center bottom,rgba(239,27,36,.16),transparent 47%),linear-gradient(#0d0e10,#060708)}
+#vehicleCanvas{display:block;width:100%;height:340px}
+#vehicleReference{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:radial-gradient(ellipse at center bottom,rgba(239,27,36,.18),transparent 48%),#08090b;display:none;padding:34px 20px 28px}
+#vehicleReference.show{display:block}
+.viewer-tabs{display:flex;gap:7px;margin-bottom:10px}
+.viewer-tabs button{background:#121317;color:#d8d9dd;border:1px solid #3a3c42;border-radius:5px;padding:8px 11px;font-weight:800;cursor:pointer}
+.viewer-tabs button.active{background:var(--red);border-color:var(--red);color:#fff}
+.match-status{font-size:.75rem;color:#9fa2a8;margin:7px 0 10px;min-height:18px}
+.line-items{display:grid;gap:6px;margin:8px 0 5px}
+.line-item{display:flex;justify-content:space-between;gap:15px;padding:7px 9px;background:#0a0b0d;border:1px solid #292c31;border-radius:5px}
+.line-item span:last-child{color:#ff4a52;font-weight:900}
+.booked-card{display:grid;grid-template-columns:120px 1fr;gap:12px;margin-top:12px;padding:12px;background:#0a0c0d;border:1px solid rgba(44,211,126,.35);border-radius:6px}
+.booked-card img{width:120px;height:82px;object-fit:cover;border-radius:5px;background:#151515}
+.booked-card h4{margin:0 0 5px;color:#fff}.booked-card p{margin:3px 0;color:#d5d8dc;font-size:.8rem}
+.viewer-label{position:absolute;top:12px;left:14px;z-index:2;font-size:.78rem;color:#e2e3e6}
+.viewer-label strong{font-size:1rem;color:#fff;display:block}
+.viewer-note{position:absolute;left:10px;right:10px;bottom:8px;text-align:center;font-size:.68rem;color:#8f9298}
+.viewer-controls{display:flex;gap:7px;position:absolute;right:10px;top:10px;z-index:2}.viewer-controls button{background:#15171b;color:#fff;border:1px solid #464950;border-radius:4px;padding:7px 9px;cursor:pointer}
+.services-choice{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.choice{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:center;background:#0b0c0e;border:1px solid #2c2e33;border-radius:5px;padding:12px;text-align:left;color:#fff;cursor:pointer;width:100%}
+.choice:hover{border-color:#6b1c21;background:#121316}
+.choice.selected{background:rgba(239,27,36,.12);border-color:var(--red);box-shadow:0 0 18px rgba(239,27,36,.10)}
+.choice b{font-size:.82rem}.choice small{display:block;color:#8f9297;margin-top:2px}.choice strong{font-size:.82rem;color:#ff434c}
+.date-time{display:grid;grid-template-columns:1fr 1.35fr;gap:12px;margin-top:14px}.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;max-height:360px;overflow:auto;padding-right:3px}.slot{padding:9px 5px;background:#222429;border:1px solid #31343a;color:#fff;border-radius:4px;cursor:pointer}.slot.active{background:var(--red);border-color:var(--red)}
+.summary{margin-top:14px;border-top:1px solid #2d2f34;padding-top:12px;color:#c8c9cd;font-size:.87rem}.sum-row{display:flex;justify-content:space-between;gap:15px;padding:4px 0}.total{font-size:1.1rem;color:#fff}.total strong{color:#ff434c;font-size:1.35rem}
+.success{display:none;margin-top:11px;padding:12px;border-radius:5px;border:1px solid rgba(44,211,126,.45);background:rgba(44,211,126,.08);color:#dfffea}
+.memberships{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.plan{position:relative}.plan.featured{border-color:var(--red);box-shadow:0 0 38px rgba(239,27,36,.12)}.badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--red);font-size:.7rem;font-weight:950;padding:5px 15px;border-radius:3px}
+.plan .monthly{font-size:.8rem;color:#ff535b}.plan .price{font-size:2rem;font-weight:1000;color:var(--red)}
+.track-divider{height:82px;opacity:.3;background:
+linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent),
+repeating-linear-gradient(104deg,transparent 0 28px,#151515 29px 44px,transparent 45px 73px);
+transform:skewY(-1.5deg);mask-image:linear-gradient(90deg,transparent 3%,#000 16%,#000 84%,transparent 97%)}
+footer{padding:30px 0;border-top:1px solid #222;color:#999;font-size:.8rem}
+@media(max-width:900px){.contactbar .inner{gap:9px;font-size:.72rem}.links{display:none}.trust .row,.service-grid,.memberships,.booking-grid,.date-time{grid-template-columns:1fr}.trust-item{border-right:0;border-bottom:1px solid #25272b}.hero{min-height:610px;background-position:center}.services-choice{grid-template-columns:1fr}.slots{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="contactbar">
+  <div class="container inner">
+    <strong>MACKIAH CLAUDIO</strong>
+    <a href="mailto:mackiahclaudio0202@icloud.com">mackiahclaudio0202@icloud.com</a>
+    <a href="tel:+13049172981">304-917-2981</a>
+  </div>
+</div>
+<nav><div class="container nav">
+  <div class="logo">MACK’S <span>AUTOMOTIVE</span></div>
+  <div class="links"><a href="#services">SERVICES</a><a href="#booking">BOOK</a><a href="#memberships">SUBSCRIPTIONS</a><a href="#contact">CONTACT</a></div>
+  <a class="btn btn-red" href="#booking">Book Appointment</a>
+</div></nav>
+
+<header class="hero">
+  <div class="hero-copy container">
+    <h1><span>Mack’s Automotive</span><strong>Detail and Tint</strong></h1>
+    <p>Detailing, tint, boat care and motorcycle cleaning with a red-neon garage atmosphere and easy multi-service booking.</p>
+    <div class="hero-actions"><a class="btn btn-red" href="#booking">Book Now</a><a class="btn btn-outline" href="#services">View Services</a></div>
+  </div>
+</header>
+<div class="ambient-line"></div>
+
+<div class="trust"><div class="container row">
+  <div class="trust-item"><b>EXPERT DETAILING</b><small>Careful interior and exterior work</small></div>
+  <div class="trust-item"><b>PRO WINDOW TINT</b><small>Sedan $250 • SUV / Truck $300</small></div>
+  <div class="trust-item"><b>BOAT + MOTORCYCLE</b><small>Specialty vehicle cleaning available</small></div>
+  <div class="trust-item"><b>EASY BOOKING</b><small>Choose multiple services together</small></div>
+</div></div>
+
+<section id="services"><div class="container">
+  <div class="section-title"><div class="eyebrow">Our Services</div><h2>DETAIL • TINT • PROTECT</h2><p>Add one service or stack several into one booking.</p></div>
+  <div class="service-grid">
+    <article class="service-card"><div class="eyebrow">Detailing</div><h3>Premium Detail</h3><div class="price">$149.99</div><p>Interior and exterior clean-up for daily drivers and weekend cars.</p><ul><li>Hand wash</li><li>Interior vacuum</li><li>Surface wipe-down</li><li>Wheel and tire finish</li></ul><button class="btn btn-outline" onclick="addService('premium')">Add Service</button></article>
+    <article class="service-card"><div class="eyebrow">Window Tint</div><h3>Sedan / SUV / Truck Tint</h3><div class="price">$250–$300</div><p>Pricing changes automatically by vehicle body type.</p><ul><li>Sedan — $250</li><li>SUV — $300</li><li>Truck — $300</li><li>UV, heat and glare reduction</li></ul><button class="btn btn-outline" onclick="addService('tint')">Add Tint</button></article>
+    <article class="service-card"><div class="eyebrow">Marine</div><h3>Boat Cleaning</h3><div class="price">$500</div><p>Dedicated boat cleaning option for interior and exterior surfaces.</p><ul><li>Exterior wash</li><li>Interior clean</li><li>Glass and brightwork</li><li>Final wipe-down</li></ul><button class="btn btn-outline" onclick="addService('boat')">Add Boat Cleaning</button></article>
+    <article class="service-card"><div class="eyebrow">Motorcycle</div><h3>Motorcycle Cleaning</h3><div class="price">$100</div><p>Careful hand cleaning for motorcycles with attention to wheels and painted surfaces.</p><ul><li>Hand wash</li><li>Wheel cleanup</li><li>Dry and finish</li><li>Surface detail</li></ul><button class="btn btn-outline" onclick="addService('motorcycle')">Add Motorcycle</button></article>
+    <article class="service-card"><div class="eyebrow">Correction</div><h3>Paint Enhancement</h3><div class="price">$299.99</div><p>Gloss improvement for paint that needs more than a wash.</p><ul><li>Decontamination</li><li>Machine polish</li><li>Gloss enhancement</li><li>Paint protection</li></ul><button class="btn btn-outline" onclick="addService('paint')">Add Service</button></article>
+    <article class="service-card"><div class="eyebrow">Protection</div><h3>Ceramic Coating</h3><div class="price">$399.99</div><p>Durable protection and easier maintenance for your finish.</p><ul><li>Surface preparation</li><li>Ceramic coating</li><li>Hydrophobic finish</li><li>Maintenance guidance</li></ul><button class="btn btn-outline" onclick="addService('ceramic')">Add Service</button></article>
+  </div>
+</div></section>
+
+<div class="track-divider"></div>
+
+<section class="booking-shell" id="booking"><div class="container">
+  <div class="section-title"><div class="eyebrow">Book Your Appointment</div><h2>BUILD YOUR SERVICE + CHECK OUT</h2><p>Click any service to add it to your booking. Your total updates instantly, then choose a one-hour start time from 8:00 AM through 10:00 PM.</p></div>
+
+  <div class="booking-grid">
+    <div class="panel">
+      <h3>1. Choose Your Vehicle Type</h3>
+      <div class="field"><label>Vehicle Type</label><select id="bodyType">
+        <option value="sedan">Sedan</option>
+        <option value="suv">SUV</option>
+        <option value="truck">Truck</option>
+        <option value="coupe">Coupe</option>
+        <option value="motorcycle">Motorcycle</option>
+        <option value="boat">Boat</option>
+      </select></div>
+      <div class="field"><label>Vehicle (optional)</label><input id="manualVehicle" placeholder="e.g. 2016 Volkswagen Jetta GLI"></div>
+
+      <h3 style="margin-top:20px">2. Click Services to Add Them</h3>
+      <div class="services-choice">
+        <button type="button" class="choice service-btn" data-id="premium" data-name="Premium Detail" data-price="149.99">
+          <div><b>Premium Detail</b><small>Interior + exterior</small></div><strong>$149.99</strong>
+        </button>
+        <button type="button" class="choice service-btn" id="tintChoice" data-id="tint" data-name="Window Tint" data-price="250">
+          <div><b>Window Tint</b><small id="tintSub">Sedan pricing</small></div><strong id="tintCost">$250</strong>
+        </button>
+        <button type="button" class="choice service-btn" data-id="boat" data-name="Boat Cleaning" data-price="500">
+          <div><b>Boat Cleaning</b><small>Marine cleaning</small></div><strong>$500</strong>
+        </button>
+        <button type="button" class="choice service-btn" data-id="motorcycle" data-name="Motorcycle Cleaning" data-price="100">
+          <div><b>Motorcycle Cleaning</b><small>Full wash + detail</small></div><strong>$100</strong>
+        </button>
+        <button type="button" class="choice service-btn" data-id="paint" data-name="Paint Enhancement" data-price="299.99">
+          <div><b>Paint Enhancement</b><small>Machine polish</small></div><strong>$299.99</strong>
+        </button>
+        <button type="button" class="choice service-btn" data-id="ceramic" data-name="Ceramic Coating" data-price="399.99">
+          <div><b>Ceramic Coating</b><small>Longer-lasting protection</small></div><strong>$399.99</strong>
+        </button>
+      </div>
+      <div style="margin-top:10px;color:#9fa2a8;font-size:.78rem">Click a selected service again to remove it.</div>
+    </div>
+
+    <div class="panel">
+      <h3>3. Date, Time & Checkout</h3>
+      <div class="date-time">
+        <div>
+          <div class="field"><label>Appointment Date</label><input id="date" type="date"></div>
+          <div class="field"><label>Name</label><input id="name" placeholder="Customer name"></div>
+          <div class="field"><label>Email</label><input id="email" type="email" placeholder="Customer email"></div>
+          <div class="field"><label>Phone</label><input id="phone" placeholder="Phone number"></div>
+          <div class="field"><label>Payment Method</label>
+            <select id="paymentMethod">
+              <option>Credit / Debit Card</option>
+              <option>Apple Pay / Google Pay</option>
+              <option>Pay in Person</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <div class="field"><label>1-Hour Start Time — 8:00 AM to 10:00 PM</label><div class="slots" id="slots"></div></div>
+        </div>
+      </div>
+
+      <div class="summary">
+        <div class="sum-row"><span>Vehicle</span><strong id="summaryVehicle">Sedan</strong></div>
+        <div><strong>Selected Services</strong></div>
+        <div class="line-items" id="summaryLineItems"><div class="line-item"><span>No services selected</span><span>$0.00</span></div></div>
+        <div class="sum-row"><span>Appointment</span><strong id="summaryTime">None selected</strong></div>
+        <div class="sum-row total"><span>Total</span><strong id="summaryTotal">$0.00</strong></div>
+      </div>
+
+      <button class="btn btn-red" style="width:100%;margin-top:12px" onclick="checkoutBooking()">Checkout</button>
+      <div class="success" id="success"></div>
+      <div style="margin-top:10px;color:#8f9298;font-size:.72rem">Demo checkout: this front-end does not charge a card until a live payment processor such as Stripe is connected.</div>
+    </div>
+  </div>
+</div></section>
+
+<section id="memberships"><div class="container">
+  <div class="section-title"><div class="eyebrow">Memberships</div><h2>KEEP IT CLEAN ALL MONTH</h2><p>Recurring options for customers who want routine maintenance.</p></div>
+  <div class="memberships">
+    <article class="service-card plan"><div class="monthly">Essential</div><h3>Monthly Wash</h3><div class="price">$59.99</div><p>One wash per month with priority booking.</p><ul><li>1 exterior wash</li><li>10% off add-ons</li><li>Priority scheduling</li></ul><button class="btn btn-outline">Choose Plan</button></article>
+    <article class="service-card plan featured"><span class="badge">UNLIMITED</span><div class="monthly">Best for frequent washes</div><h3>Unlimited Wash Plan</h3><div class="price">$300 <span style="font-size:.8rem;color:#ddd">/ month</span></div><p>Unlimited maintenance washes under your membership terms.</p><ul><li>Unlimited eligible washes</li><li>Priority booking</li><li>10% off other services</li><li>Member-only offers</li></ul><button class="btn btn-red">Choose Unlimited</button></article>
+    <article class="service-card plan"><div class="monthly">Premium</div><h3>Detail Membership</h3><div class="price">$149.99</div><p>Recurring detailing with member discounts.</p><ul><li>2 full details monthly</li><li>20% off add-ons</li><li>Priority scheduling</li></ul><button class="btn btn-outline">Choose Plan</button></article>
+  </div>
+</div></section>
+
+<footer id="contact"><div class="container">© 2026 Mack’s Automotive Detail and Tint • Mackiah Claudio • <a href="mailto:mackiahclaudio0202@icloud.com">mackiahclaudio0202@icloud.com</a> • <a href="tel:+13049172981">304-917-2981</a><br>Sedan tint $250 • SUV / Truck tint $300 • Boat cleaning $500 • Motorcycle cleaning $100</div></footer>
+
+<script>
+
+const serviceButtons=[...document.querySelectorAll('.service-btn')];
+const bodyType=document.getElementById('bodyType');
+const tintChoice=document.getElementById('tintChoice');
+let selectedTime=null;
+const selectedServices=new Map();
+
+function tintPrice(){
+  return ['suv','truck'].includes(bodyType.value) ? 300 : 250;
+}
+
+function updateTintPrice(){
+  const p=tintPrice();
+  tintChoice.dataset.price=p;
+  document.getElementById('tintCost').textContent='$'+p.toFixed(2);
+  document.getElementById('tintSub').textContent=
+    bodyType.value==='sedan' ? 'Sedan pricing' :
+    ['suv','truck'].includes(bodyType.value) ? 'SUV / Truck pricing' :
+    'Standard vehicle pricing';
+
+  if(selectedServices.has('tint')){
+    selectedServices.set('tint',{name:'Window Tint',price:p});
+  }
+  recalc();
+}
+
+function toggleService(btn){
+  const id=btn.dataset.id;
+  if(selectedServices.has(id)){
+    selectedServices.delete(id);
+    btn.classList.remove('selected');
+  }else{
+    selectedServices.set(id,{
+      name:btn.dataset.name,
+      price:Number(btn.dataset.price)
+    });
+    btn.classList.add('selected');
+  }
+  recalc();
+}
+
+serviceButtons.forEach(btn=>btn.addEventListener('click',()=>toggleService(btn)));
+
+function recalc(){
+  const items=[...selectedServices.values()];
+  const total=items.reduce((sum,item)=>sum+item.price,0);
+  const holder=document.getElementById('summaryLineItems');
+  holder.innerHTML=items.length
+    ? items.map(item=>`<div class="line-item"><span>${item.name}</span><span>$${item.price.toFixed(2)}</span></div>`).join('')
+    : '<div class="line-item"><span>No services selected</span><span>$0.00</span></div>';
+  document.getElementById('summaryTotal').textContent='$'+total.toFixed(2);
+}
+
+function updateVehicleSummary(){
+  const manual=document.getElementById('manualVehicle').value.trim();
+  const type=bodyType.options[bodyType.selectedIndex].text;
+  document.getElementById('summaryVehicle').textContent=manual || type;
+}
+
+bodyType.addEventListener('change',()=>{
+  updateTintPrice();
+  updateVehicleSummary();
+});
+document.getElementById('manualVehicle').addEventListener('input',updateVehicleSummary);
+
+function addService(id){
+  const btn=serviceButtons.find(x=>x.dataset.id===id);
+  if(btn && !selectedServices.has(id)){
+    selectedServices.set(id,{name:btn.dataset.name,price:Number(btn.dataset.price)});
+    btn.classList.add('selected');
+    recalc();
+  }
+  document.getElementById('booking').scrollIntoView({behavior:'smooth'});
+}
+
+const slots=document.getElementById('slots');
+const times=[];
+for(let h=8;h<=22;h++){
+  const suffix=h>=12?'PM':'AM';
+  const display=(h%12||12)+':00 '+suffix;
+  times.push(display);
+}
+times.forEach(t=>{
+  const b=document.createElement('button');
+  b.type='button';
+  b.className='slot';
+  b.textContent=t;
+  b.onclick=()=>{
+    document.querySelectorAll('.slot').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    selectedTime=t;
+    const date=document.getElementById('date').value;
+    document.getElementById('summaryTime').textContent=(date?date+' • ':'')+t;
+  };
+  slots.appendChild(b);
+});
+
+const dt=new Date();
+dt.setMinutes(dt.getMinutes()-dt.getTimezoneOffset());
+document.getElementById('date').min=dt.toISOString().slice(0,10);
+document.getElementById('date').value=dt.toISOString().slice(0,10);
+document.getElementById('date').addEventListener('change',()=>{
+  if(selectedTime){
+    document.getElementById('summaryTime').textContent=document.getElementById('date').value+' • '+selectedTime;
+  }
+});
+
+function checkoutBooking(){
+  const items=[...selectedServices.values()];
+  const name=document.getElementById('name').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const phone=document.getElementById('phone').value.trim();
+  const date=document.getElementById('date').value;
+  const paymentMethod=document.getElementById('paymentMethod').value;
+
+  if(!items.length) return alert('Select at least one service.');
+  if(!selectedTime) return alert('Select a 1-hour appointment time.');
+  if(!name || !email || !phone) return alert('Enter your name, email, and phone number.');
+
+  const total=items.reduce((sum,item)=>sum+item.price,0);
+  const vehicle=document.getElementById('manualVehicle').value.trim() || bodyType.options[bodyType.selectedIndex].text;
+  const booking={
+    customer:name,
+    email,
+    phone,
+    date,
+    time:selectedTime,
+    vehicle,
+    vehicleType:bodyType.value,
+    paymentMethod,
+    services:items,
+    total
+  };
+  localStorage.setItem('macksLatestBooking',JSON.stringify(booking));
+
+  const s=document.getElementById('success');
+  s.style.display='block';
+  s.innerHTML=`✓ <strong>Checkout ready.</strong>
+    <div class="booked-card" style="grid-template-columns:1fr">
+      <div>
+        <h4>${vehicle}</h4>
+        <p><strong>${date}</strong> at <strong>${selectedTime}</strong></p>
+        <p>${items.map(x=>`${x.name} — $${x.price.toFixed(2)}`).join('<br>')}</p>
+        <p><strong>Total: $${total.toFixed(2)}</strong></p>
+        <p>Payment method: ${paymentMethod}</p>
+      </div>
+    </div>`;
+}
+
+updateTintPrice();
+updateVehicleSummary();
+recalc();
+</script>
+</body>
+</html>
