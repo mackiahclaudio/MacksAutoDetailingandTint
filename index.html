@@ -89,7 +89,13 @@ radial-gradient(ellipse at center bottom,rgba(239,27,36,.16),transparent 47%),li
 .paypal-box.show{display:block}
 .paypal-note{margin-top:8px;color:#8f9298;font-size:.72rem}
 .paypal-warning{display:none;margin-top:10px;padding:10px;border:1px solid #6b5513;background:#241e08;color:#ffe78a;border-radius:5px;font-size:.78rem}
-.memberships{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.plan{position:relative}.plan.featured{border-color:var(--red);box-shadow:0 0 38px rgba(239,27,36,.12)}.badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--red);font-size:.7rem;font-weight:950;padding:5px 15px;border-radius:3px}
+.memberships{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.plan{position:relative}
+.cartbar{position:sticky;bottom:0;z-index:45;background:rgba(8,8,9,.95);backdrop-filter:blur(12px);border-top:1px solid #2b2d31;box-shadow:0 -12px 35px rgba(0,0,0,.45)}
+.cartbar .inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0}
+.cart-items{color:#d7d8db;font-size:.84rem}.cart-total{font-size:1.15rem;font-weight:1000;color:#ff424b}
+.cart-actions{display:flex;gap:8px;align-items:center}
+.plan.selected{border-color:var(--red);box-shadow:0 0 30px rgba(239,27,36,.16)}
+.plan .btn.selected{background:var(--red);border-color:var(--red)}.plan.featured{border-color:var(--red);box-shadow:0 0 38px rgba(239,27,36,.12)}.badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--red);font-size:.7rem;font-weight:950;padding:5px 15px;border-radius:3px}
 .plan .monthly{font-size:.8rem;color:#ff535b}.plan .price{font-size:2rem;font-weight:1000;color:var(--red)}
 .track-divider{height:82px;opacity:.3;background:
 linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent),
@@ -134,6 +140,9 @@ footer{padding:30px 0;border-top:1px solid #222;color:#999;font-size:.8rem}
   <div class="service-grid">
     <article class="service-card"><div class="eyebrow">Detailing</div><h3>Premium Detail</h3><div class="price">$149.99</div><p>Interior and exterior clean-up for daily drivers and weekend cars.</p><ul><li>Hand wash</li><li>Interior vacuum</li><li>Surface wipe-down</li><li>Wheel and tire finish</li></ul><button class="btn btn-outline" onclick="addService('premium')">Add Service</button></article>
     <article class="service-card"><div class="eyebrow">Window Tint</div><h3>Sedan / SUV / Truck Tint</h3><div class="price">$250–$300</div><p>Pricing changes automatically by vehicle body type.</p><ul><li>Sedan — $250</li><li>SUV — $300</li><li>Truck — $300</li><li>UV, heat and glare reduction</li></ul><button class="btn btn-outline" onclick="addService('tint')">Add Tint</button></article>
+
+    <article class="service-card"><div class="eyebrow">Window Tint</div><h3>SUV Tint</h3><div class="price">$300</div><p>Professional tint package for SUVs.</p><ul><li>Heat & glare reduction</li><li>UV protection</li><li>Clean professional installation</li><li>SUV pricing</li></ul><button class="btn btn-outline" onclick="addService('suvtint')">Add SUV Tint</button></article>
+    <article class="service-card"><div class="eyebrow">Window Tint</div><h3>Truck Tint</h3><div class="price">$300</div><p>Professional tint package for trucks.</p><ul><li>Heat & glare reduction</li><li>UV protection</li><li>Clean professional installation</li><li>Truck pricing</li></ul><button class="btn btn-outline" onclick="addService('trucktint')">Add Truck Tint</button></article>
     <article class="service-card"><div class="eyebrow">Marine</div><h3>Boat Cleaning</h3><div class="price">$500</div><p>Dedicated boat cleaning option for interior and exterior surfaces.</p><ul><li>Exterior wash</li><li>Interior clean</li><li>Glass and brightwork</li><li>Final wipe-down</li></ul><button class="btn btn-outline" onclick="addService('boat')">Add Boat Cleaning</button></article>
     <article class="service-card"><div class="eyebrow">Motorcycle</div><h3>Motorcycle Cleaning</h3><div class="price">$100</div><p>Careful hand cleaning for motorcycles with attention to wheels and painted surfaces.</p><ul><li>Hand wash</li><li>Wheel cleanup</li><li>Dry and finish</li><li>Surface detail</li></ul><button class="btn btn-outline" onclick="addService('motorcycle')">Add Motorcycle</button></article>
     <article class="service-card"><div class="eyebrow">Correction</div><h3>Paint Enhancement</h3><div class="price">$299.99</div><p>Gloss improvement for paint that needs more than a wash.</p><ul><li>Decontamination</li><li>Machine polish</li><li>Gloss enhancement</li><li>Paint protection</li></ul><button class="btn btn-outline" onclick="addService('paint')">Add Service</button></article>
@@ -166,6 +175,12 @@ footer{padding:30px 0;border-top:1px solid #222;color:#999;font-size:.8rem}
         </button>
         <button type="button" class="choice service-btn" id="tintChoice" data-id="tint" data-name="Window Tint" data-price="250">
           <div><b>Window Tint</b><small id="tintSub">Sedan pricing</small></div><strong id="tintCost">$250</strong>
+        </button>
+        <button type="button" class="choice service-btn" data-id="suvtint" data-name="SUV Tint" data-price="300">
+          <div><b>SUV Tint</b><small>Dedicated SUV tint option</small></div><strong>$300</strong>
+        </button>
+        <button type="button" class="choice service-btn" data-id="trucktint" data-name="Truck Tint" data-price="300">
+          <div><b>Truck Tint</b><small>Dedicated truck tint option</small></div><strong>$300</strong>
         </button>
         <button type="button" class="choice service-btn" data-id="boat" data-name="Boat Cleaning" data-price="500">
           <div><b>Boat Cleaning</b><small>Marine cleaning</small></div><strong>$500</strong>
@@ -219,7 +234,7 @@ footer{padding:30px 0;border-top:1px solid #222;color:#999;font-size:.8rem}
       </div>
       <div class="paypal-warning" id="paypalWarning"></div>
       <div class="success" id="success"></div>
-      <div class="paypal-note">PayPal checkout is ready in the site code. To accept live payments, replace the placeholder PayPal Client ID in the script with your own PayPal app Client ID. Never put your PayPal secret key in this website.</div>
+      <div class="paypal-note">PayPal checkout is connected to the cart total. Subscription selections are added to the cart as monthly-plan items. For true automatic recurring billing each month, connect PayPal Subscriptions/Plans on a backend or through PayPal plan IDs.</div>
     </div>
   </div>
 </div></section>
@@ -227,12 +242,25 @@ footer{padding:30px 0;border-top:1px solid #222;color:#999;font-size:.8rem}
 <section id="memberships"><div class="container">
   <div class="section-title"><div class="eyebrow">Memberships</div><h2>KEEP IT CLEAN ALL MONTH</h2><p>Recurring options for customers who want routine maintenance.</p></div>
   <div class="memberships">
-    <article class="service-card plan"><div class="monthly">Essential</div><h3>Monthly Wash</h3><div class="price">$59.99</div><p>One wash per month with priority booking.</p><ul><li>1 exterior wash</li><li>10% off add-ons</li><li>Priority scheduling</li></ul><button class="btn btn-outline">Choose Plan</button></article>
-    <article class="service-card plan featured"><span class="badge">UNLIMITED</span><div class="monthly">Best for frequent washes</div><h3>Unlimited Wash Plan</h3><div class="price">$300 <span style="font-size:.8rem;color:#ddd">/ month</span></div><p>Unlimited maintenance washes under your membership terms.</p><ul><li>Unlimited eligible washes</li><li>Priority booking</li><li>10% off other services</li><li>Member-only offers</li></ul><button class="btn btn-red">Choose Unlimited</button></article>
-    <article class="service-card plan"><div class="monthly">Premium</div><h3>Detail Membership</h3><div class="price">$149.99</div><p>Recurring detailing with member discounts.</p><ul><li>2 full details monthly</li><li>20% off add-ons</li><li>Priority scheduling</li></ul><button class="btn btn-outline">Choose Plan</button></article>
+    <article class="service-card plan" data-plan-id="monthlywash" data-plan-name="Monthly Wash Subscription" data-plan-price="59.99"><div class="monthly">Essential</div><h3>Monthly Wash</h3><div class="price">$59.99 <span style="font-size:.8rem;color:#ddd">/ month</span></div><p>One wash per month with priority booking.</p><ul><li>1 exterior wash</li><li>10% off add-ons</li><li>Priority scheduling</li></ul><button class="btn btn-outline" onclick="togglePlan(this)">Add Subscription</button></article>
+    <article class="service-card plan featured" data-plan-id="unlimitedwash" data-plan-name="Unlimited Wash Subscription" data-plan-price="300"><span class="badge">UNLIMITED</span><div class="monthly">Best for frequent washes</div><h3>Unlimited Wash Plan</h3><div class="price">$300 <span style="font-size:.8rem;color:#ddd">/ month</span></div><p>Unlimited maintenance washes under your membership terms.</p><ul><li>Unlimited eligible washes</li><li>Priority booking</li><li>10% off other services</li><li>Member-only offers</li></ul><button class="btn btn-red" onclick="togglePlan(this)">Add Subscription</button></article>
+    <article class="service-card plan" data-plan-id="detailmembership" data-plan-name="Detail Membership Subscription" data-plan-price="149.99"><div class="monthly">Premium</div><h3>Detail Membership</h3><div class="price">$149.99 <span style="font-size:.8rem;color:#ddd">/ month</span></div><p>Recurring detailing with member discounts.</p><ul><li>2 full details monthly</li><li>20% off add-ons</li><li>Priority scheduling</li></ul><button class="btn btn-outline" onclick="togglePlan(this)">Add Subscription</button></article>
   </div>
 </div></section>
 
+
+<div class="cartbar">
+  <div class="container inner">
+    <div>
+      <div class="cart-items" id="cartItems">Cart is empty</div>
+      <div class="cart-total" id="cartTotal">Total: $0.00</div>
+    </div>
+    <div class="cart-actions">
+      <a class="btn btn-outline" href="#booking">Review Booking</a>
+      <button class="btn btn-red" onclick="checkoutBooking()">Pay / Checkout</button>
+    </div>
+  </div>
+</div>
 <footer id="contact"><div class="container">© 2026 Mack’s Automotive Detail and Tint • Mackiah Claudio • <a href="mailto:mackiahclaudio0202@icloud.com">mackiahclaudio0202@icloud.com</a> • <a href="tel:+13049172981">304-917-2981</a><br>Sedan tint $250 • SUV / Truck tint $300 • Boat cleaning $500 • Motorcycle cleaning $100</div></footer>
 
 <script>
@@ -244,6 +272,7 @@ const bodyType=document.getElementById('bodyType');
 const tintChoice=document.getElementById('tintChoice');
 let selectedTime=null;
 const selectedServices=new Map();
+const selectedPlans=new Map();
 
 function tintPrice(){
   return ['suv','truck'].includes(bodyType.value) ? 300 : 250;
@@ -282,13 +311,24 @@ function toggleService(btn){
 serviceButtons.forEach(btn=>btn.addEventListener('click',()=>toggleService(btn)));
 
 function recalc(){
-  const items=[...selectedServices.values()];
-  const total=items.reduce((sum,item)=>sum+item.price,0);
+  const serviceItems=[...selectedServices.values()];
+  const planItems=[...selectedPlans.values()];
+  const allItems=[...serviceItems,...planItems];
+  const total=allItems.reduce((sum,item)=>sum+item.price,0);
+
   const holder=document.getElementById('summaryLineItems');
-  holder.innerHTML=items.length
-    ? items.map(item=>`<div class="line-item"><span>${item.name}</span><span>$${item.price.toFixed(2)}</span></div>`).join('')
-    : '<div class="line-item"><span>No services selected</span><span>$0.00</span></div>';
+  holder.innerHTML=allItems.length
+    ? allItems.map(item=>`<div class="line-item"><span>${item.name}${item.subscription?' <small style="color:#999">(monthly)</small>':''}</span><span>$${item.price.toFixed(2)}</span></div>`).join('')
+    : '<div class="line-item"><span>No services or subscriptions selected</span><span>$0.00</span></div>';
+
   document.getElementById('summaryTotal').textContent='$'+total.toFixed(2);
+
+  const cartItems=document.getElementById('cartItems');
+  const cartTotal=document.getElementById('cartTotal');
+  if(cartItems){
+    cartItems.textContent=allItems.length ? allItems.map(x=>x.name).join(' • ') : 'Cart is empty';
+    cartTotal.textContent='Total: $'+total.toFixed(2);
+  }
 }
 
 function updateVehicleSummary(){
@@ -346,12 +386,36 @@ document.getElementById('date').addEventListener('change',()=>{
 });
 
 
+
+function togglePlan(button){
+  const card=button.closest('.plan');
+  const id=card.dataset.planId;
+  const item={
+    name:card.dataset.planName,
+    price:Number(card.dataset.planPrice),
+    subscription:true
+  };
+
+  if(selectedPlans.has(id)){
+    selectedPlans.delete(id);
+    card.classList.remove('selected');
+    button.classList.remove('selected');
+    button.textContent='Add Subscription';
+  }else{
+    selectedPlans.set(id,item);
+    card.classList.add('selected');
+    button.classList.add('selected');
+    button.textContent='Added to Cart';
+  }
+  recalc();
+}
+
 function getCheckoutTotal(){
-  return [...selectedServices.values()].reduce((sum,item)=>sum+item.price,0);
+  return [...selectedServices.values(),...selectedPlans.values()].reduce((sum,item)=>sum+item.price,0);
 }
 
 function getBookingDraft(){
-  const items=[...selectedServices.values()];
+  const items=[...selectedServices.values(),...selectedPlans.values()];
   const vehicle=document.getElementById('manualVehicle').value.trim() || bodyType.options[bodyType.selectedIndex].text;
   return {
     customer:document.getElementById('name').value.trim(),
@@ -368,7 +432,7 @@ function getBookingDraft(){
 
 function validateBookingDraft(){
   const b=getBookingDraft();
-  if(!b.services.length){alert('Select at least one service.');return false}
+  if(!b.services.length){alert('Select at least one service or subscription.');return false}
   if(!b.time){alert('Select a 1-hour appointment time.');return false}
   if(!b.customer || !b.email || !b.phone){alert('Enter your name, email, and phone number.');return false}
   return true;
